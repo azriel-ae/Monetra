@@ -1,0 +1,24 @@
+# Architecture Decisions
+
+- Light mode only.
+- Indonesian language and IDR integer amounts.
+- IndexedDB is the primary and only required database.
+- Savings is a virtual account/ledger separate from main balance.
+- Deposits and withdrawals are internal transfers, not income or expenses.
+- Gemini is optional and requires explicit user consent.
+- Gemini API key is server-only.
+- PWA shell caching is same-origin and does not cache API responses.
+- Notification scheduling is best-effort while app is open; no guarantee is made for closed-app timers.
+- Gemini model is fixed server-side to `gemini-2.5-flash-lite` to prioritize low token cost; do not expose model selection or the API key in Angular.
+- The Gemini request payload is a compact snapshot (summary + top categories + goals + budgets + last 25 transactions, notes stripped), not the full transaction history, to keep tokens low and privacy exposure minimal.
+- Single-component navigation via the `page` signal instead of Angular Router: the app is one cohesive workspace, there is no deep-linking requirement, and `vercel.json` still rewrites every non-API path to `index.html` so PWA launches from the home screen always work.
+- Zoneless change detection (Angular 21 default) with signal-based reactive state; all async-updated UI state uses `signal()`.
+- Service worker uses network-first for navigations and cache-first for hashed assets, with a versioned cache name, so deploys are picked up immediately and stale-shell blank screens cannot occur.
+- Dexie schema changes are additive (`version(2)` adds a compound index only); no destructive migration, old data stays compatible.
+- Backup restore validates structure first and snapshots a backup before REPLACE mode; validation failures leave the database untouched.
+- Identity palette (v1.1.0): primary `#365C8D` blue with `#D5A65A` warm accent; green is banned from the UI by product decision — income/positive states are blue, expense/negative are `#D65B62`.
+- Flat-surface design (v1.1.0): cards are distinguished by 1 px borders and surface color, not shadows; shadows are reserved for overlays (modal, toast, more-sheet). No gradients or glass effects.
+- Savings plan math (v1.1.0) uses real calendar dates (UTC day differences, month-end clamping, leap years), never 30-day month assumptions; daily need is rounded up (`ceil`) so the target stays reachable.
+- Deposits are free-amount by design (v1.1.0): the over-target rejection was removed; progress caps at 100% and a reaching deposit stamps `completedAt` on the goal.
+- The AI endpoint speaks a strict success/failure JSON contract (v1.1.0) and never forwards raw upstream (Google) error text to the client; details go to server logs only.
+- Brand mark (v1.1.0) is the "Diamond Progress" geometry (solid lower half = collected funds, outlined upper half = plan) — deliberately not a coin, bar chart, wallet, or initial avatar.
