@@ -15,8 +15,3 @@
   <img alt="Vercel" src="https://img.shields.io/badge/Deploy-Vercel-000000?logo=vercel&logoColor=white">
 </p>
 
-Monetra is a local-first personal finance PWA built with Angular 21 and Dexie/IndexedDB. It tracks income, expenses, duration-based savings goals (daily/weekly/monthly need computed from real calendar dates), budgets, analytics, local backups, and optional Gemini AI assistance through a Vercel server function.
-
-## Requirements
-- Node.js 22.12 or newer (Angular 21 compatibility; Vercel target: 22.x)
-- npm
