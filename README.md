@@ -5,7 +5,7 @@
 <h1 align="center">Monetra</h1>
 
 <p align="center">
-  Pengelola keuangan pribadi <i>local-first</i> berbasis <b>Angular</b> — PWA, offline, dengan asisten AI dan notifikasi harian.
+  Pengelola keuangan pribadi berbasis <b>Angular</b> — PWA, offline, dengan asisten AI dan notifikasi harian.
 </p>
 
 <p align="center">
